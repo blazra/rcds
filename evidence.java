@@ -1,13 +1,9 @@
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
 import com.db4o.query.Predicate;
-//import com.db4o.query.Query;
-//import com.db4o.ObjectSet;
 
 import java.util.Scanner;
 import java.util.List;
-import java.io.*;
-
 
 
 public class evidence
@@ -31,18 +27,11 @@ public class evidence
 
         System.out.print("Stiskni enter pro pokracovani ");
         rollThread.start();
-        // try
-        // {
-             scan.nextLine();
-        //     //System.in.read();
-        // }
-        //catch(IOException e)
-        //{
-        //    e.printStackTrace();
-        //}
+
+        scan.nextLine();
+   
         rollThread.interrupt();
         rollThread.join();          //wait for roll thread to die
-        //System.out.print("\b");
     }
 
     static void listResult(List<ElPart> result){

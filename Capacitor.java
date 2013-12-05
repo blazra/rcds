@@ -4,19 +4,11 @@ import java.util.Arrays;
 
 public class Capacitor extends ElPart
 {
-	protected static ArrayList<String> dielectrics = new ArrayList<String>(Arrays.asList("neznámý", "keramický", "elektrolytický", "fóliový", "tantalový"));
+	protected ArrayList<String> dielectrics = new ArrayList<String>(Arrays.asList("neznámý", "keramický", "elektrolytický", "fóliový", "tantalový"));
 
 	protected String dielectric=dielectrics.get(0);
 	protected double maxVoltage;
 	protected double tolerance = 5;
-
-	// Capacitor(double value, double maxVoltage, double tolerance, String dielectric)
-	// {
-	// 	setValue(value);
-	// 	this.maxVoltage = maxVoltage;
-	// 	this.tolerance = tolerance;
-	// 	setDielectric(dielectric);
-	// }
 
 	public Capacitor()
 	{

@@ -21,7 +21,6 @@ public class Roll extends Thread
 	            catch(InterruptedException e)
 	            {
 	            	Thread.currentThread().interrupt();
-	            	System.out.print("\b");
 	            }
 	        }
 	}
