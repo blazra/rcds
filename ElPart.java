@@ -3,13 +3,13 @@ import java.util.ArrayList;
 
 public abstract class ElPart
 {
-	static final long serialVersionUID=42;
-	double value;
+	//static final long serialVersionUID=42;
+	private double value;
 
-	ElPart()
+	public ElPart()
 	{}
 
-	ElPart(double value)
+	public ElPart(double value)
 	{
 		this.value = value;
 	}
@@ -24,8 +24,16 @@ public abstract class ElPart
 		return this.value;
 	}
 
-	//public static ElPart factory()
-	//{}
+	public static ElPart factory(String type)
+	{
+		switch(type.toLowerCase())
+		{
+			case "r": return (ElPart) new Resistor();
+			//case "c": return (ElPart) new Capacitor();
+			//case "l": return (ElPart) new Inductor();
+			default : return null;	
+		}
+	}
 
 	public abstract ArrayList<Object> getAllParams();
 	

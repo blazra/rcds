@@ -1,16 +1,31 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Resistor extends ElPart
 {
-	String material = "carbon";
-	double powerRating = 0.25;	//in W
-	double tolerance = 5;		//in percents
+	protected static ArrayList<String> materials = new ArrayList<String>(Arrays.asList("neznámý", "uhlíkový", "metalizovaný", "metal-oxid", "drátový"));
+	
+	protected String material = materials.get(0); 	//get default from the first element
+	protected double powerRating = 0.25;			//in W
+	protected double tolerance = 5;					//in percents
 
-	Resistor(double value, double powerRating, double tolerance)
+	// public Resistor(double value, double powerRating, double tolerance)
+	// {
+	// 	setValue(value);
+	// 	setPowerRating(powerRating);
+	// 	setTolerance(tolerance);
+	// }
+
+	public Resistor()
 	{
-		super(value);
-		this.powerRating = powerRating;
-		this.tolerance = tolerance;
+		System.out.print("Zadej hodnotu v ohmech: ");
+		setValue(evidence.scan.nextDouble());	
+		System.out.print("Zadej maximální ztrátový výkon ve wattech (0 pro výchozích "+powerRating+"W ): ");
+		setPowerRating(evidence.scan.nextDouble());
+		System.out.print("Zadej toleranci v % (0 pro výchozích "+tolerance+"% ): ");
+		setTolerance(evidence.scan.nextDouble());
+		System.out.print("Zadej typ materiálu (číslo) - ");
+		setMaterial();
 	}
 
 	public ArrayList<Object> getAllParams()
@@ -23,14 +38,40 @@ public class Resistor extends ElPart
 		return list;
 	}
 
+	public void	setPowerRating(double powerRating)
+	{
+		this.powerRating = powerRating;
+	}
+
 	public double getPowerRating()
 	{
 		return powerRating;
 	}
 
+	public void	setTolerance(double tolerance)
+	{
+		this.tolerance = tolerance;
+	}
+
 	public double getTolerance()
 	{
 		return tolerance;
+	}
+
+	public void setMaterial()
+	{
+		System.out.println("možnosti jsou: ");
+		for(int i=0;i<materials.size();i++)
+		{
+			System.out.print(i+" "+materials.get(i)+", ");
+		}
+		System.out.println();
+		setMaterial(materials.get(evidence.scan.nextInt()));
+	}
+
+	public void setMaterial(String material)
+	{
+		this.material = material;
 	}
 
 	public String getMaterial()

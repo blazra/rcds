@@ -1,8 +1,8 @@
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
-//import com.db4o.ObjectSet;
 import com.db4o.query.Predicate;
 //import com.db4o.query.Query;
+//import com.db4o.ObjectSet;
 
 import java.util.Scanner;
 import java.util.List;
@@ -12,6 +12,9 @@ import java.io.*;
 
 public class evidence
 {
+    static ObjectContainer db;
+    static Scanner scan;
+
     static void printChooseInfo()
     {
         System.out.println("Vyber akci pane!");
@@ -68,18 +71,20 @@ public class evidence
 
     static void storeObject()
     {
-        Resistor odpor = new Resistor(100, 0.33, 3);
-        
-        db.store(odpor);
-    }
+        System.out.println("Zadejte typ:");
+        System.out.println("R pro rezistor");
+        System.out.println("C pro kondenzator");
 
-    static ObjectContainer db;
+        ElPart part = ElPart.factory(scan.nextLine());
+        
+        db.store(part);
+    }
 
     public static void main(String[] args) 
     {
-        System.out.println("--- Vítej v evidenci ---\nverze 0.2 revize Doma 2.12.2013\n");
+        System.out.println("--- Vítej v evidenci ---\n");
 
-        Scanner scan = new Scanner(System.in);
+        scan = new Scanner(System.in);
         db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "database.db4o"); //open db4o
 
         String choose;
@@ -99,9 +104,9 @@ public class evidence
                 case "store": storeObject();
                     break;
             }
-            if(!choose.equals("quit"))
+            if(!(choose.equals("quit")||choose.equals("q")))
                 waitForEnter();
-        }while(!choose.equals("quit"));
+        }while(!(choose.equals("quit")||choose.equals("q")));
 
         db.close();
         scan.close();
