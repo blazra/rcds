@@ -13,7 +13,6 @@ public class evidence
 
     static void printChooseInfo()
     {
-        System.out.println("Vyber akci pane!");
         System.out.println("list   - zobrazi vsechny evidovane predmety");
         System.out.println("search - vyhledat evidovane predmety");
         System.out.println("store  - pridat predmet do evidence");
@@ -74,7 +73,9 @@ public class evidence
 
     public static void main(String[] args) throws InterruptedException
     {
-        System.out.println("--- Vítej v evidenci ---\n");
+        System.out.println("--- Vítej v evidenci ---");
+        System.out.println("Copyright 2013 Radovan Blažek");
+        System.out.println("This is free software with ABSOLUTELY NO WARRANTY.\n");
 
         scan = new Scanner(System.in);
         db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "database.db4o"); //open db4o
