@@ -12,6 +12,7 @@ public class Capacitor extends ElPart
 
 	public Capacitor()
 	{
+		setName("Kondenzátor");
 		System.out.print("Zadej hodnotu ve faradech: ");
 		setValue(evidence.scan.nextDouble());	
 		System.out.print("Zadej maximální povolené napětí ve voltech: ");
@@ -25,6 +26,7 @@ public class Capacitor extends ElPart
 	public ArrayList<Object> getAllParams()
 	{
 		ArrayList<Object> list = new ArrayList<>();
+		list.add(getName());
 		list.add(getValue());
 		list.add(getMaxVoltage());
 		list.add(getDielectric());

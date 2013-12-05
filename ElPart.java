@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public abstract class ElPart
 {
-	//static final long serialVersionUID=42;
 	private double value;
+	private String name;
 
 	public ElPart()
 	{}
@@ -12,6 +12,16 @@ public abstract class ElPart
 	public ElPart(double value)
 	{
 		this.value = value;
+	}
+
+	protected void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public String getName()
+	{
+		return name;
 	}
 
 	public void setValue(double value)

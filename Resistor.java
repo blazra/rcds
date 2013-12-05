@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 public class Resistor extends ElPart
 {
 	protected ArrayList<String> materials = new ArrayList<String>(Arrays.asList("neznámý", "uhlíkový", "metalizovaný", "metal-oxid", "drátový"));
@@ -9,15 +10,9 @@ public class Resistor extends ElPart
 	protected double powerRating = 0.25;			//in W
 	protected double tolerance = 5;					//in percents
 
-	// public Resistor(double value, double powerRating, double tolerance)
-	// {
-	// 	setValue(value);
-	// 	setPowerRating(powerRating);
-	// 	setTolerance(tolerance);
-	// }
-
 	public Resistor()
 	{
+		setName("Rezistor");
 		System.out.print("Zadej hodnotu v ohmech: ");
 		setValue(evidence.scan.nextDouble());	
 		System.out.print("Zadej maximální ztrátový výkon ve wattech (0 pro výchozích "+powerRating+"W ): ");
@@ -31,6 +26,7 @@ public class Resistor extends ElPart
 	public ArrayList<Object> getAllParams()
 	{
 		ArrayList<Object> list = new ArrayList<>();
+		list.add(getName());
 		list.add(getValue());
 		list.add(getPowerRating());
 		list.add(getTolerance());
