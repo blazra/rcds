@@ -29,7 +29,7 @@ public abstract class ElPart
 		switch(type.toLowerCase())
 		{
 			case "r": return (ElPart) new Resistor();
-			//case "c": return (ElPart) new Capacitor();
+			case "c": return (ElPart) new Capacitor();
 			//case "l": return (ElPart) new Inductor();
 			default : return null;	
 		}

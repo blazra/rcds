@@ -73,7 +73,7 @@ public class evidence
     {
         System.out.println("Zadejte typ:");
         System.out.println("R pro rezistor");
-        System.out.println("C pro kondenzator");
+        System.out.println("C pro kondenzátor");
 
         ElPart part = ElPart.factory(scan.nextLine());
         

@@ -40,7 +40,8 @@ public class Resistor extends ElPart
 
 	public void	setPowerRating(double powerRating)
 	{
-		this.powerRating = powerRating;
+		if(powerRating!=0)
+			this.powerRating = powerRating;
 	}
 
 	public double getPowerRating()
@@ -50,7 +51,8 @@ public class Resistor extends ElPart
 
 	public void	setTolerance(double tolerance)
 	{
-		this.tolerance = tolerance;
+		if(tolerance!=0)
+			this.tolerance = tolerance;
 	}
 
 	public double getTolerance()
