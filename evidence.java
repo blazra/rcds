@@ -25,22 +25,24 @@ public class evidence
         System.out.println();
     }
 
-    static void waitForEnter()
+    static void waitForEnter() throws InterruptedException
     {
         Roll rollThread = new Roll();
 
         System.out.print("Stiskni enter pro pokracovani ");
         rollThread.start();
-        try
-        {
-            System.in.read();
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
+        // try
+        // {
+             scan.nextLine();
+        //     //System.in.read();
+        // }
+        //catch(IOException e)
+        //{
+        //    e.printStackTrace();
+        //}
         rollThread.interrupt();
-        System.out.print("\b");
+        rollThread.join();          //wait for roll thread to die
+        //System.out.print("\b");
     }
 
     static void listResult(List<ElPart> result){
@@ -76,11 +78,12 @@ public class evidence
         System.out.println("C pro kondenzátor");
 
         ElPart part = ElPart.factory(scan.nextLine());
-        
         db.store(part);
+
+        scan.nextLine();    //for waitforenter to work
     }
 
-    public static void main(String[] args) 
+    public static void main(String[] args) throws InterruptedException
     {
         System.out.println("--- Vítej v evidenci ---\n");
 

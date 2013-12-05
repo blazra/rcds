@@ -17,7 +17,12 @@ public class Roll extends Thread
 		            Thread.currentThread().sleep(sleepTime);
 		            System.out.print("\b/");
 		            Thread.currentThread().sleep(sleepTime);
-	            }catch(InterruptedException e) {Thread.currentThread().interrupt();}
+	            }
+	            catch(InterruptedException e)
+	            {
+	            	Thread.currentThread().interrupt();
+	            	System.out.print("\b");
+	            }
 	        }
 	}
 }

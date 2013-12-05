@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class Resistor extends ElPart
 {
-	protected static ArrayList<String> materials = new ArrayList<String>(Arrays.asList("neznámý", "uhlíkový", "metalizovaný", "metal-oxid", "drátový"));
+	protected ArrayList<String> materials = new ArrayList<String>(Arrays.asList("neznámý", "uhlíkový", "metalizovaný", "metal-oxid", "drátový"));
 	
 	protected String material = materials.get(0); 	//get default from the first element
 	protected double powerRating = 0.25;			//in W
