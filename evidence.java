@@ -5,12 +5,20 @@ import com.db4o.query.Predicate;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 
 public class evidence
 {
     static ObjectContainer db;
     static Scanner scan;
+
+    static void printStartupInfo()
+    {
+        System.out.println("--- Vítej v evidenci ---");
+        System.out.println("Copyright 2013 Radovan Blažek");
+        System.out.println("This is free software with ABSOLUTELY NO WARRANTY.\n");
+    }
 
     static void printChooseInfo()
     {
@@ -52,8 +60,18 @@ public class evidence
     static void listAllObjects()
     {
         System.out.println("ID\tTyp\t\tOdpor\tPmax\tTol\tMateriál");
-        List<ElPart> parts = db.query(ElPart.class);    //get all ElPart children
-        listResult(parts);
+        List<ElPart> resistors = db.query(new Predicate<ElPart>(){    //get all resistors
+            public boolean match(ElPart part){
+                return part.getClass()==Resistor.class;
+            }});
+        listResult(resistors);
+        System.out.println();
+        System.out.println("ID\tTyp\t\tKap\tUmax\tDielektrikum\tTol");
+        List<ElPart> capacitors = db.query(new Predicate<ElPart>(){    //get all capacitors
+            public boolean match(ElPart part){
+                return part.getClass()==Capacitor.class;
+            }});
+        listResult(capacitors);
         System.out.println();
     }
 
@@ -86,16 +104,15 @@ public class evidence
         System.out.println("C pro kondenzátor");
 
         ElPart part = ElPart.factory(scan.nextLine(), db.query(ElPart.class).size());
-        db.store(part);
+        if(part!=null)
+            db.store(part);
 
         scan.nextLine();    //clears buffer for waitforenter to work
     }
 
     public static void main(String[] args) throws InterruptedException
     {
-        System.out.println("--- Vítej v evidenci ---");
-        System.out.println("Copyright 2013 Radovan Blažek");
-        System.out.println("This is free software with ABSOLUTELY NO WARRANTY.\n");
+        printStartupInfo();
 
         scan = new Scanner(System.in);
         db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "database.db4o"); //open db4o
@@ -106,22 +123,30 @@ public class evidence
             printChooseInfo();
             choose=scan.nextLine();
             System.out.println();
-            switch(choose)
+            try
             {
-                case "list":    listAllObjects();
-                    break;
+                switch(choose)
+                {
+                    case "list":    listAllObjects();
+                        waitForEnter();
+                        break;
 
-                case "search":
-                    break;
+                    case "searcwaitForEnter();h":
+                        break;
 
-                case "delete":  deleteObject();
-                    break;
+                    case "delete":  deleteObject();
+                        break;
 
-                case "store":   storeObject();
-                    break;
+                    case "store":   storeObject();
+                        break;
+                }
             }
-            if(!(choose.equals("quit")||choose.equals("q")))
-                waitForEnter();
+            catch(InputMismatchException e)
+            {
+                System.out.println("Chybně zadaná hodnota");
+                scan.nextLine();
+            }
+
         }while(!(choose.equals("quit")||choose.equals("q")));
 
         db.close();

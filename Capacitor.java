@@ -27,10 +27,10 @@ public class Capacitor extends ElPart
 	{
 		ArrayList<Object> list = new ArrayList<>();
 		list.add(getName());
-		list.add(getValue());
-		list.add(getMaxVoltage());
+		list.add(getValue()+"F");
+		list.add(getMaxVoltage()+"V");
 		list.add(getDielectric());
-		list.add(getTolerance());
+		list.add(getTolerance()+"%");
 		return list;
 	}
 

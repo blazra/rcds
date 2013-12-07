@@ -42,7 +42,7 @@ public abstract class ElPart
 			case "r": return (ElPart) new Resistor(id);
 			case "c": return (ElPart) new Capacitor(id);
 			//case "l": return (ElPart) new Inductor();
-			default : return null;	
+			default : System.out.println("Zadaný typ neexistuje"); return null;
 		}
 	}
 
