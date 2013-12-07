@@ -10,7 +10,7 @@ public class Resistor extends ElPart
 	protected double powerRating = 0.25;			//in W
 	protected double tolerance = 5;					//in percents
 
-	public Resistor()
+	public Resistor(long id)
 	{
 		setName("Rezistor");
 		System.out.print("Zadej hodnotu v ohmech: ");
@@ -27,9 +27,9 @@ public class Resistor extends ElPart
 	{
 		ArrayList<Object> list = new ArrayList<>();
 		list.add(getName());
-		list.add(getValue());
-		list.add(getPowerRating());
-		list.add(getTolerance());
+		list.add(getValue()+"R");
+		list.add(getPowerRating()+"W");
+		list.add(getTolerance()+"%");
 		list.add(getMaterial());
 		return list;
 	}

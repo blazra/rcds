@@ -3,8 +3,9 @@ import java.util.ArrayList;
 
 public abstract class ElPart
 {
-	private double value;
 	private String name;
+	private double value;
+
 
 	public ElPart()
 	{}
@@ -34,12 +35,12 @@ public abstract class ElPart
 		return this.value;
 	}
 
-	public static ElPart factory(String type)
+	public static ElPart factory(String type, long id)
 	{
 		switch(type.toLowerCase())
 		{
-			case "r": return (ElPart) new Resistor();
-			case "c": return (ElPart) new Capacitor();
+			case "r": return (ElPart) new Resistor(id);
+			case "c": return (ElPart) new Capacitor(id);
 			//case "l": return (ElPart) new Inductor();
 			default : return null;	
 		}
