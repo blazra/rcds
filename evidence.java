@@ -81,15 +81,17 @@ public class evidence
         List<ElPart> parts = new ArrayList<>();
 
         System.out.print("Zadej ID objektu k vymazání: ");
-        Object wantedObject = db.ext().getByID(scan.nextLong());
-        if(wantedObject!=null)
-        {
+        int wantedId = scan.nextInt();
+        try{
+            Object wantedObject = db.ext().getByID(wantedId);
+            if(wantedObject==null)
+                throw new com.db4o.ext.InvalidIDException(wantedId);
             parts.add((ElPart)wantedObject);
             listResult(parts);
             db.delete(parts.get(0));
             System.out.println("deleted");
         }
-        else
+        catch(com.db4o.ext.InvalidIDException e)
         {
             System.out.println("Objekt nenalezen");
         }
