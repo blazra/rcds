@@ -1,6 +1,7 @@
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
 import com.db4o.query.Predicate;
+import com.db4o.config.*;
 
 import java.util.Scanner;
 import java.util.List;
@@ -112,10 +113,14 @@ public class evidence
 
     public static void main(String[] args) throws InterruptedException
     {
-        printStartupInfo();
+        EmbeddedConfiguration config = Db4oEmbedded.newConfiguration();         //create new config for db4o
+        config.common().automaticShutDown(false);                               //disable db4o shutdownhook
+        java.lang.Runtime.getRuntime().addShutdownHook(new ShutdownHook());     //enable our less verbose shutdownhook
 
         scan = new Scanner(System.in);
-        db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "database.db4o"); //open db4o
+        db = Db4oEmbedded.openFile(config, "database.db4o");                    //open db4o
+
+        printStartupInfo();
 
         String choose;
         do
@@ -131,7 +136,7 @@ public class evidence
                         waitForEnter();
                         break;
 
-                    case "searcwaitForEnter();h":
+                    case "search":
                         break;
 
                     case "delete":  deleteObject();
@@ -149,8 +154,6 @@ public class evidence
 
         }while(!(choose.equals("quit")||choose.equals("q")));
 
-        db.close();
-        scan.close();
+        //scan.close();
     }
 }
-
