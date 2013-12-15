@@ -11,8 +11,18 @@ import java.util.InputMismatchException;
 
 public class evidence
 {
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_RESET = "\u001B[0m";
+
     static ObjectContainer db;
     static Scanner scan;
+
+    static void printErr(String s)
+    {
+        System.out.print(ANSI_RED);
+        System.out.println(s);
+        System.out.print(ANSI_RESET);
+    }
 
     static void printStartupInfo()
     {
@@ -29,6 +39,7 @@ public class evidence
         System.out.println("store  - pridat predmet do evidence");
         System.out.println("quit   - ukonceni");
         System.out.println();
+        System.out.print(":) ");
     }
 
     static void waitForEnter() throws InterruptedException
@@ -82,7 +93,8 @@ public class evidence
 
         System.out.print("Zadej ID objektu k vymazání: ");
         int wantedId = scan.nextInt();
-        try{
+        try
+        {
             Object wantedObject = db.ext().getByID(wantedId);
             if(wantedObject==null)
                 throw new com.db4o.ext.InvalidIDException(wantedId);
@@ -93,7 +105,9 @@ public class evidence
         }
         catch(com.db4o.ext.InvalidIDException e)
         {
+            System.out.println(ANSI_RED);
             System.out.println("Objekt nenalezen");
+            System.out.print(ANSI_RESET);
         }
 
         System.out.println();
@@ -105,12 +119,14 @@ public class evidence
         System.out.println("Zadejte typ:");
         System.out.println("R pro rezistor");
         System.out.println("C pro kondenzátor");
+        System.out.println("L pro cívku");
 
         ElPart part = ElPart.factory(scan.nextLine(), db.query(ElPart.class).size());
         if(part!=null)
+        {
             db.store(part);
-
-        scan.nextLine();    //clears buffer for waitforenter to work
+            scan.nextLine();    //clears buffer for waitforenter to work
+        }
     }
 
     public static void main(String[] args) throws InterruptedException
@@ -150,7 +166,9 @@ public class evidence
             }
             catch(InputMismatchException e)
             {
+                System.out.print(ANSI_RED);
                 System.out.println("Chybně zadaná hodnota");
+                System.out.print(ANSI_RESET);
                 scan.nextLine();
             }
 

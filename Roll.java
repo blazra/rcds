@@ -3,7 +3,7 @@ public class Roll extends Thread
 	public void run()
 	{
 		System.out.print("/");
-        int sleepTime = 100;
+        int sleepTime = 70;
         
 	        while(!Thread.currentThread().isInterrupted())
 	        {

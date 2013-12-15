@@ -39,10 +39,11 @@ public abstract class ElPart
 	{
 		switch(type.toLowerCase())
 		{
-			case "r": return (ElPart) new Resistor(id);
-			case "c": return (ElPart) new Capacitor(id);
-			//case "l": return (ElPart) new Inductor();
-			default : System.out.println("Zadaný typ neexistuje"); return null;
+			case "r": return (ElPart) new Resistor();
+			case "c": return (ElPart) new Capacitor();
+			case "l": return (ElPart) new Inductor();
+
+			default : evidence.printErr("Zadaný typ neexistuje\n"); return null;
 		}
 	}
 

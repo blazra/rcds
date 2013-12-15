@@ -10,12 +10,12 @@ public class Resistor extends ElPart
 	protected double powerRating = 0.25;			//in W
 	protected double tolerance = 5;					//in percents
 
-	public Resistor(long id)
+	public Resistor()
 	{
 		setName("Rezistor");
-		System.out.print("Zadej hodnotu v ohmech: ");
+		System.out.print("Zadej hodnotu v Ohmech: ");
 		setValue(evidence.scan.nextDouble());	
-		System.out.print("Zadej maximální ztrátový výkon ve wattech (0 pro výchozích "+powerRating+"W ): ");
+		System.out.print("Zadej maximální ztrátový výkon ve Wattech (0 pro výchozích "+powerRating+"W ): ");
 		setPowerRating(evidence.scan.nextDouble());
 		System.out.print("Zadej toleranci v % (0 pro výchozích "+tolerance+"% ): ");
 		setTolerance(evidence.scan.nextDouble());

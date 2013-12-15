@@ -10,12 +10,12 @@ public class Capacitor extends ElPart
 	protected double maxVoltage;
 	protected double tolerance = 5;
 
-	public Capacitor(long id)
+	public Capacitor()
 	{
 		setName("Kondenzátor");
-		System.out.print("Zadej hodnotu ve faradech: ");
+		System.out.print("Zadej hodnotu ve Faradech: ");
 		setValue(evidence.scan.nextDouble());	
-		System.out.print("Zadej maximální povolené napětí ve voltech: ");
+		System.out.print("Zadej maximální povolené napětí ve Voltech: ");
 		setMaxVoltage(evidence.scan.nextDouble());
 		System.out.print("Zadej toleranci v % (0 pro výchozích "+tolerance+"% ): ");
 		setTolerance(evidence.scan.nextDouble());
