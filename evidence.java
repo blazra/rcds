@@ -78,12 +78,21 @@ public class evidence
             }});
         listResult(resistors);
         System.out.println();
+
         System.out.println("ID\tTyp\t\tKap\tUmax\tDielektrikum\tTol");
         List<ElPart> capacitors = db.query(new Predicate<ElPart>(){    //get all capacitors
             public boolean match(ElPart part){
                 return part.getClass()==Capacitor.class;
             }});
         listResult(capacitors);
+        System.out.println();
+
+        System.out.println("ID\tTyp\t\tIndukčnost\tImax\tTol");
+        List<ElPart> inductors = db.query(new Predicate<ElPart>(){    //get all inductors
+            public boolean match(ElPart part){
+                return part.getClass()==Inductor.class;
+            }});
+        listResult(inductors);
         System.out.println();
     }
 
