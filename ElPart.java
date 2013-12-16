@@ -30,7 +30,7 @@ public abstract class ElPart
         String s = evidence.scan.nextLine();
         char suffix = s.substring(s.length()-1).charAt(0);
 
-        if(!Character.isDigit(suffix))
+        if(Character.isDigit(suffix))
         	return Double.parseDouble(s);
 
         double value = Double.parseDouble(s.substring(0, s.length()-1));
