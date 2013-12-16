@@ -14,11 +14,11 @@ public class Capacitor extends ElPart
 	{
 		setName("Kondenzátor");
 		System.out.print("Zadej hodnotu ve Faradech: ");
-		setValue(evidence.scan.nextDouble());	
+		setValue(scanValue());	
 		System.out.print("Zadej maximální povolené napětí ve Voltech: ");
-		setMaxVoltage(evidence.scan.nextDouble());
+		setMaxVoltage(scanValue());
 		System.out.print("Zadej toleranci v % (0 pro výchozích "+tolerance+"% ): ");
-		setTolerance(evidence.scan.nextDouble());
+		setTolerance(scanValue());
 		System.out.print("Zadej typ dielektrika (číslo) - ");
 		setDielectric();
 	}

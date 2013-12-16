@@ -14,11 +14,11 @@ public class Resistor extends ElPart
 	{
 		setName("Rezistor");
 		System.out.print("Zadej hodnotu v Ohmech: ");
-		setValue(evidence.scan.nextDouble());	
+		setValue(scanValue());	
 		System.out.print("Zadej maximální ztrátový výkon ve Wattech (0 pro výchozích "+powerRating+"W ): ");
-		setPowerRating(evidence.scan.nextDouble());
+		setPowerRating(scanValue());
 		System.out.print("Zadej toleranci v % (0 pro výchozích "+tolerance+"% ): ");
-		setTolerance(evidence.scan.nextDouble());
+		setTolerance(scanValue());
 		System.out.print("Zadej typ materiálu (číslo) - ");
 		setMaterial();
 	}

@@ -8,9 +8,9 @@ public class Inductor extends ElPart
 	{
 		setName("Cívka");
 		System.out.print("Zadej hodnotu v Henry: ");
-		setValue(evidence.scan.nextDouble());	
+		setValue(scanValue());	
 		System.out.print("Zadej maximální povolený proud v Ampérech: ");
-		setMaxCurrent(evidence.scan.nextDouble());
+		setMaxCurrent(scanValue());
 	}
 
 	public ArrayList<Object> getAllParams()
