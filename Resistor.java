@@ -23,6 +23,7 @@ public class Resistor extends ElPart
 		setMaterial();
 	}
 
+	//returns list of all parameters
 	public ArrayList<Object> getAllParams()
 	{
 		ArrayList<Object> list = new ArrayList<>();

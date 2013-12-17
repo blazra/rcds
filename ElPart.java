@@ -25,16 +25,30 @@ public abstract class ElPart
 		return name;
 	}
 
+	//method for scanning numbers with SI suffixes
 	public static double scanValue()
     {
         String s = evidence.scan.nextLine();
-        char suffix = s.substring(s.length()-1).charAt(0);
+        if(s.length()==0)
+        	throw new java.util.InputMismatchException();								
+        char suffix = s.substring(s.length()-1).charAt(0);					//copy last character (suffix)
+        double value;
 
         if(Character.isDigit(suffix))
-        	return Double.parseDouble(s);
+        {
+        	value=Double.parseDouble(s);
+        	if(value<0)
+        		throw new java.util.InputMismatchException();				//because negative values are irrelevant
+        	return Double.parseDouble(s);									//return normally if not suffix
+        }
 
-        double value = Double.parseDouble(s.substring(0, s.length()-1));
-        switch(suffix)
+        if(s.length()<=1)
+        	throw new java.util.InputMismatchException();
+
+        value = Double.parseDouble(s.substring(0, s.length()-1));			//copy value without suffix
+        if(value<0)
+        		throw new java.util.InputMismatchException();				//because negative values are irrelevant
+        switch(suffix)														//multiply or divide depending on suffix
         {
             case 'T': value*=1000;
             case 'G': value*=1000;
@@ -60,7 +74,8 @@ public abstract class ElPart
 		return this.value;
 	}
 
-	public static ElPart factory(String type, long id)
+	//returns new part of desired type
+	public static ElPart factory(String type)
 	{
 		switch(type.toLowerCase())
 		{

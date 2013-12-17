@@ -11,12 +11,13 @@ import java.util.InputMismatchException;
 
 public class evidence
 {
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";         //escape console code for red text
+    public static final String ANSI_RESET = "\u001B[0m";        //and color reset..
 
-    static ObjectContainer db;
-    static Scanner scan;
+    static ObjectContainer db;                                  //database instance
+    static Scanner scan;                                        
 
+    //prints red error msg
     static void printErr(String s)
     {
         System.out.print(ANSI_RED);
@@ -33,11 +34,11 @@ public class evidence
 
     static void printChooseInfo()
     {
-        System.out.println("list   - zobrazi vsechny evidovane predmety");
-        System.out.println("search - vyhledat evidovane predmety");
-        System.out.println("delete - smazat předmět z databáze");
-        System.out.println("store  - pridat predmet do evidence");
-        System.out.println("quit   - ukonceni");
+        System.out.println("list   - zobrazí všechny evidované předměty");
+        System.out.println("search - vyhledat evidované predměty");
+        System.out.println("delete - smazat předmět z evidence");
+        System.out.println("store  - přidat předmět do evidence");
+        System.out.println("quit   - ukončení");
         System.out.println();
         System.out.print(":) ");
     }
@@ -47,52 +48,70 @@ public class evidence
         Roll rollThread = new Roll();
 
         System.out.print("Stiskni enter pro pokracovani ");
-        rollThread.start();
+        rollThread.start();         //start rolling
 
-        scan.nextLine();
+        scan.nextLine();            //wait for enter
    
-        rollThread.interrupt();
+        rollThread.interrupt();     //stop rolling
         rollThread.join();          //wait for roll thread to die
+
+        System.out.println();
     }
 
     static int listResult(List<ElPart> result){
-        for (ElPart r : result)
+        for (ElPart r : result)                         //for all results from result list
         {
             System.out.print(db.ext().getID(r)+"\t");   //print db4o internal object ID
-            for(Object o : r.getAllParams())
+            for(Object o : r.getAllParams())            //print rest of the parameters
             {
                 System.out.print(o+"\t");  
             }
             System.out.println();
         }
-        System.out.println("Pocet objektu: "+result.size());
+        System.out.println("Pocet objektu: "+result.size());    
         return result.size();
     }
 
     static void listAllObjects()
     {
-        System.out.println("ID\tTyp\t\tOdpor\tPmax\tTol\tMateriál");
-        List<ElPart> resistors = db.query(new Predicate<ElPart>(){    //get all resistors
+        System.out.println("ID\tTyp\t\tR\tPmax\tTol\tMateriál");        //print resistor header
+        List<ElPart> resistors = db.query(new Predicate<ElPart>(){      //get all resistors from db4o
             public boolean match(ElPart part){
                 return part.getClass()==Resistor.class;
             }});
         listResult(resistors);
         System.out.println();
 
-        System.out.println("ID\tTyp\t\tKap\tUmax\tDielektrikum\tTol");
-        List<ElPart> capacitors = db.query(new Predicate<ElPart>(){    //get all capacitors
+        System.out.println("ID\tTyp\t\tC\tUmax\tDielektrikum\tTol");    //print capacitor header
+        List<ElPart> capacitors = db.query(new Predicate<ElPart>(){     //get all capacitors from db4o
             public boolean match(ElPart part){
                 return part.getClass()==Capacitor.class;
             }});
         listResult(capacitors);
         System.out.println();
 
-        System.out.println("ID\tTyp\t\tIndukčnost\tImax\tTol");
-        List<ElPart> inductors = db.query(new Predicate<ElPart>(){    //get all inductors
+        System.out.println("ID\tTyp\t\tL\tImax\tTol");                  //print inductor header
+        List<ElPart> inductors = db.query(new Predicate<ElPart>(){      //get all inductors from db4o
             public boolean match(ElPart part){
                 return part.getClass()==Inductor.class;
             }});
         listResult(inductors);
+        System.out.println();
+    }
+
+    static void searchObjects()
+    {
+        System.out.println("Zadej typ");
+        final char type = scan.nextLine().toLowerCase().charAt(0);
+        System.out.print("Zadej rozsah hodnoty - min: ");
+        final double min = ElPart.scanValue();
+        System.out.print("                       max: ");
+        final double max = ElPart.scanValue();
+        List<ElPart> parts = db.query(new Predicate<ElPart>(){      
+            public boolean match(ElPart part){
+                return part.getName().toLowerCase().charAt(0)==type && part.getValue()>=min && part.getValue()<=max;
+            }});
+        listResult(parts);
         System.out.println();
     }
 
@@ -104,18 +123,18 @@ public class evidence
         int wantedId = scan.nextInt();
         try
         {
-            Object wantedObject = db.ext().getByID(wantedId);
+            Object wantedObject = db.ext().getByID(wantedId);           //get object from db4o
             if(wantedObject==null)
-                throw new com.db4o.ext.InvalidIDException(wantedId);
-            parts.add((ElPart)wantedObject);
-            listResult(parts);
-            db.delete(parts.get(0));
+                throw new com.db4o.ext.InvalidIDException(wantedId);    //throw exception if you enter ID of deleted object
+            parts.add((ElPart)wantedObject);                            //add object to list for print
+            listResult(parts);                                          //print object which will be deleted
+            db.delete(parts.get(0));                                    //delete object from db4o
             System.out.println("deleted");
         }
         catch(com.db4o.ext.InvalidIDException e)
         {
             System.out.println(ANSI_RED);
-            System.out.println("Objekt nenalezen");
+            System.out.println("Objekt nenalezen");                     //print err msg in red
             System.out.print(ANSI_RESET);
         }
 
@@ -130,11 +149,11 @@ public class evidence
         System.out.println("C pro kondenzátor");
         System.out.println("L pro cívku");
 
-        ElPart part = ElPart.factory(scan.nextLine(), db.query(ElPart.class).size());
-        if(part!=null)
+        ElPart part = ElPart.factory(scan.nextLine());           //create new part of desired type
+        if(part!=null)                                          //if err don't store empty part
         {
             db.store(part);
-            scan.nextLine();    //clears buffer for waitforenter to work
+            scan.nextLine();                                    //clears buffer for waitforenter to work
         }
     }
 
@@ -163,7 +182,8 @@ public class evidence
                         waitForEnter();
                         break;
 
-                    case "search":
+                    case "search":  searchObjects();
+                        waitForEnter();
                         break;
 
                     case "delete":  deleteObject();
@@ -175,14 +195,11 @@ public class evidence
             }
             catch(InputMismatchException e)
             {
-                System.out.print(ANSI_RED);
-                System.out.println("Chybně zadaná hodnota");
-                System.out.print(ANSI_RESET);
-                scan.nextLine();
+                printErr("Chybně zadaná hodnota");                //print err msg in red
+                //scan.nextLine();
+                waitForEnter();
             }
 
         }while(!(choose.equals("quit")||choose.equals("q")));
-
-        //scan.close();
     }
 }
