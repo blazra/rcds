@@ -23,6 +23,7 @@ public class Capacitor extends ElPart
 		setDielectric();
 	}
 
+	//returns list of all parameters
 	public ArrayList<Object> getAllParams()
 	{
 		ArrayList<Object> list = new ArrayList<>();

@@ -16,6 +16,7 @@ public class Inductor extends ElPart
 		setTolerance(scanValue());
 	}
 
+	//returns list of all parameters
 	public ArrayList<Object> getAllParams()
 	{
 		ArrayList<Object> list = new ArrayList<>();
